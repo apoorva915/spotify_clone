@@ -1,13 +1,14 @@
 console.log("Welcome to Spotify");
 
-let songIndex = 0;
-let audioElement = new Audio('songs/1.mp3');
-let masterPlay = document.getElementById('masterPlay');
+let songIndex = 0; //index of currently playing song
+let audioElement = new Audio('songs/1.mp3');//html audio element used to play song
+let masterPlay = document.getElementById('masterPlay'); //pay pause btn
 let myProgressBar = document.getElementById('myProgressBar');
 let gif = document.getElementById('gif');
-let masterSongName = document.getElementById('masterSongName');
-let songItems = Array.from(document.getElementsByClassName('songItem'));
+let masterSongName = document.getElementById('masterSongName');//name of currently playing song
+let songItems = Array.from(document.getElementsByClassName('songItem')); //song array
 
+//array of objects for each song details
 let songs = [
     {songName: "Warriyo - Mortals [NCS Release]", filePath: "songs/1.mp3", coverPath: "covers/1.jpg"},
     {songName: "Cielo - Huma-Huma", filePath: "songs/2.mp3", coverPath: "covers/2.jpg"},
@@ -21,13 +22,14 @@ let songs = [
     {songName: "Na Jaana - Salam-e-Ishq", filePath: "songs/4.mp3", coverPath: "covers/10.jpg"},
 ]
 
+//to set cover image and song name for each song
 songItems.forEach((element, i)=>{ 
     element.getElementsByTagName("img")[0].src = songs[i].coverPath; 
     element.getElementsByClassName("songName")[0].innerText = songs[i].songName; 
 })
  
 
-// Handle play/pause click
+// to toggle pay pause btn on click
 masterPlay.addEventListener('click', ()=>{
     if(audioElement.paused || audioElement.currentTime<=0){
         audioElement.play();
@@ -42,7 +44,8 @@ masterPlay.addEventListener('click', ()=>{
         gif.style.opacity = 0;
     }
 })
-// Listen to Events
+
+//to keep track of song progress 
 audioElement.addEventListener('timeupdate', ()=>{ 
     // Update Seekbar
     progress = parseInt((audioElement.currentTime/audioElement.duration)* 100); 
@@ -53,6 +56,7 @@ myProgressBar.addEventListener('change', ()=>{
     audioElement.currentTime = myProgressBar.value * audioElement.duration/100;
 })
 
+//function to play song when clicked
 const makeAllPlays = ()=>{
     Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
         element.classList.remove('fa-pause-circle');
@@ -76,6 +80,7 @@ Array.from(document.getElementsByClassName('songItemPlay')).forEach((element)=>{
     })
 })
 
+//to keep track of previous and next song
 document.getElementById('next').addEventListener('click', ()=>{
     if(songIndex>=9){
         songIndex = 0
